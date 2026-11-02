@@ -1,7 +1,7 @@
 {
   "project": "integrationguard",
   "verification_date": "2026-11-01",
-  "python_tests": 15,
+  "python_tests": 19,
   "python_statement_branch_coverage_percent": 85.82,
   "python_coverage_scope": "entire app package, including startup and optional collectors",
   "typescript_tests": 2,
@@ -38,5 +38,6 @@
     "actions": 3,
     "strict_extra_fields": "forbidden"
   },
-  "sample_sha256": "75f2f4290637b481e46ee65ed402b029671e94d1bf3b23346e723af599c3bf56"
+  "sample_sha256": "75f2f4290637b481e46ee65ed402b029671e94d1bf3b23346e723af599c3bf56",
+  "public_artifact_boundary": "explicit file allowlist, private test state excluded, marker rejection and guarded upload"
 }
