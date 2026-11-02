@@ -17,3 +17,7 @@ A process crash before commit rolls back domain state and receipts. Local filesy
 No Salesforce or Vanta account was available for native acceptance. Salesforce collector contract tests use synthetic HTTP responses; they are not account verification. Its native query covers PermissionSet definitions only, not assignments, muting, MFA, connected applications or proven effective permissions. OAuth scopes in the assessment come from explicit imported observations. There is no native MuleSoft connector. The gateway and event receiver are actual loopback services using synthetic data, not live enterprise integrations. The receiver is not a commercial SIEM. Provider corrections are proposed by evidence only, never automatically executed. Rate windows are process-local.
 
 Immutable observation snapshots retain correction history. A correction links to its previous digest and stores replacement source evidence before updating the current view. The offline CLI additionally sends normalized events over actual loopback HTTP to a signed, durable local receiver and checks signature rejection, delivery replay and independent persisted readback.
+
+## Protocol and provider references
+
+[Salesforce Security Guide](https://resources.docs.salesforce.com/latest/latest/en-us/sfdc/pdf/salesforce_security_impl_guide.pdf) provides provider security context. Licensed Event Monitoring and connected-app assessment are outside this implemented native collector.
