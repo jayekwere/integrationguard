@@ -1,0 +1,7 @@
+{
+  "synthetic": true,
+  "scopes": [
+    "synthetic:read"
+  ],
+  "destination": "loopback fixture"
+}

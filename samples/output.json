@@ -1,0 +1,274 @@
+{
+  "mode": "synthetic-offline",
+  "transcript": [
+    {
+      "step": "Import risky synthetic integration settings",
+      "result": {
+        "id": "crm",
+        "provider": "salesforce-export",
+        "owner": "business-systems",
+        "scopes": [
+          "full"
+        ],
+        "modify_all_data": true,
+        "mfa_required": null,
+        "observed_at": "2026-11-01T12:00:00Z",
+        "source_sha256": "52ce12e48a2b7f4eab49b7f6b016dea1ea83846021afde9e80bd743ed3ad2df9",
+        "source_ref": "samples/salesforce-risky.json",
+        "version": 1,
+        "source_trust": "operator_imported_export",
+        "previous_sha256": null,
+        "findings": [
+          {
+            "rule": "IG001",
+            "pointer": "/scopes",
+            "state": "observed-excess",
+            "recommendation": "Review and narrow the explicit integration scope"
+          },
+          {
+            "rule": "IG002",
+            "pointer": "/modify_all_data",
+            "state": "observed-risk",
+            "recommendation": "Review this setting in the source system and collect replacement evidence"
+          },
+          {
+            "rule": "IG003",
+            "pointer": "/mfa_required",
+            "state": "missing",
+            "recommendation": "Review this setting in the source system and collect replacement evidence"
+          }
+        ],
+        "sha256": "b1629dde92272851d649f2df4ee03ce52e5ec81ddbdacc0866508729521e7567"
+      }
+    },
+    {
+      "step": "Import a narrow permission configuration",
+      "result": {
+        "findings": [],
+        "id": "crm",
+        "mfa_required": true,
+        "modify_all_data": false,
+        "observed_at": "2026-11-01T12:00:00Z",
+        "owner": "business-systems",
+        "previous_sha256": "b1629dde92272851d649f2df4ee03ce52e5ec81ddbdacc0866508729521e7567",
+        "provider": "salesforce-export",
+        "scopes": [
+          "api:read"
+        ],
+        "source_ref": "samples/salesforce-risky.json",
+        "source_sha256": "510dfd45f268b8ca39e7bd29796b78a19f19877cc1615b89fd2fa71b84d09f90",
+        "source_trust": "operator_imported_export",
+        "version": 2,
+        "sha256": "49f445211cb4e50e44a4844d06e4639d21362788eed592c156302efee300d572"
+      }
+    },
+    {
+      "step": "Reject replacement based on an old version",
+      "expected_denial": 409,
+      "reason": "Record version changed"
+    },
+    {
+      "step": "Normalize an observed bulk export event",
+      "result": {
+        "id": "event-one",
+        "integration_id": "crm",
+        "event": "bulk-export",
+        "occurred_at": "2026-11-01T12:00:00Z",
+        "native_id": "synthetic-event-001",
+        "severity": "high",
+        "format": "integrationguard-event-v1",
+        "evidence_sha256": "49f445211cb4e50e44a4844d06e4639d21362788eed592c156302efee300d572"
+      }
+    },
+    {
+      "step": "Deduplicate the native event identifier",
+      "result": {
+        "event": "bulk-export",
+        "evidence_sha256": "49f445211cb4e50e44a4844d06e4639d21362788eed592c156302efee300d572",
+        "format": "integrationguard-event-v1",
+        "id": "event-one",
+        "integration_id": "crm",
+        "native_id": "synthetic-event-001",
+        "occurred_at": "2026-11-01T12:00:00Z",
+        "severity": "high"
+      }
+    },
+    {
+      "step": "Register the local read-only API integration",
+      "result": {
+        "id": "gateway",
+        "provider": "synthetic-gateway",
+        "owner": "platform",
+        "scopes": [
+          "synthetic:read"
+        ],
+        "modify_all_data": false,
+        "mfa_required": true,
+        "observed_at": "2026-11-01T12:00:00Z",
+        "source_sha256": "b523782773d8501b80c534f871337a44c7d4ec9b45238403c59564fa74687297",
+        "source_ref": "samples/gateway.json",
+        "version": 1,
+        "source_trust": "operator_imported_export",
+        "previous_sha256": null,
+        "findings": [],
+        "sha256": "c5aa0ef20fb17878373dbe9315d3e556e0f6baa2e7d97b72219280f54e57b014"
+      }
+    },
+    {
+      "step": "Reject a tenant-crossing correction",
+      "expected_denial": 404,
+      "reason": "Record not found"
+    }
+  ],
+  "summary": {
+    "integrations": [
+      {
+        "findings": [],
+        "id": "crm",
+        "mfa_required": true,
+        "modify_all_data": false,
+        "observed_at": "2026-11-01T12:00:00Z",
+        "owner": "business-systems",
+        "previous_sha256": "b1629dde92272851d649f2df4ee03ce52e5ec81ddbdacc0866508729521e7567",
+        "provider": "salesforce-export",
+        "scopes": [
+          "api:read"
+        ],
+        "sha256": "49f445211cb4e50e44a4844d06e4639d21362788eed592c156302efee300d572",
+        "source_ref": "samples/salesforce-risky.json",
+        "source_sha256": "510dfd45f268b8ca39e7bd29796b78a19f19877cc1615b89fd2fa71b84d09f90",
+        "source_trust": "operator_imported_export",
+        "version": 2
+      },
+      {
+        "findings": [],
+        "id": "gateway",
+        "mfa_required": true,
+        "modify_all_data": false,
+        "observed_at": "2026-11-01T12:00:00Z",
+        "owner": "platform",
+        "previous_sha256": null,
+        "provider": "synthetic-gateway",
+        "scopes": [
+          "synthetic:read"
+        ],
+        "sha256": "c5aa0ef20fb17878373dbe9315d3e556e0f6baa2e7d97b72219280f54e57b014",
+        "source_ref": "samples/gateway.json",
+        "source_sha256": "b523782773d8501b80c534f871337a44c7d4ec9b45238403c59564fa74687297",
+        "source_trust": "operator_imported_export",
+        "version": 1
+      }
+    ],
+    "events": [
+      {
+        "event": "bulk-export",
+        "evidence_sha256": "49f445211cb4e50e44a4844d06e4639d21362788eed592c156302efee300d572",
+        "format": "integrationguard-event-v1",
+        "id": "event-one",
+        "integration_id": "crm",
+        "native_id": "synthetic-event-001",
+        "occurred_at": "2026-11-01T12:00:00Z",
+        "severity": "high"
+      }
+    ],
+    "native_effective_permissions": "not_proven",
+    "corrections": "evidence_import_only_no_provider_writes"
+  },
+  "evidence": {
+    "tenant": "alder",
+    "integrity": "verified_local_chain",
+    "checkpoint": "ba219fe5d610f24128e09bb6e4b1ceb76cec7de81c3e5a2399fa84f502c4e334",
+    "events": [
+      {
+        "payload": {
+          "action": "import-integration",
+          "at": "2026-11-01T12:00:00Z",
+          "request_sha256": "8e06c3a6b6011ea159b87dde6d8ea2caa52fd412839a82512159f0794a190ed1",
+          "result_sha256": "a6e68f8cf40d9fd42b0f6c34bf7cd30a71a16ad705937384736326824547800b",
+          "subject": "alex",
+          "tenant": "alder"
+        },
+        "previous": "0000000000000000000000000000000000000000000000000000000000000000",
+        "hash": "c78a7316323a8548ebfeb8befe8f1a84b9a79b8228340aa3e85789ce1981efe9"
+      },
+      {
+        "payload": {
+          "action": "record-correction",
+          "at": "2026-11-01T12:00:00Z",
+          "request_sha256": "f5ae98d729989b2089b5c2355fdc34516eef93d702a32be8bb4952686f852b93",
+          "result_sha256": "c247cf714f47988c44d78e49865c39f6ecb4ae867ba61805367777db66448d40",
+          "subject": "alex",
+          "tenant": "alder"
+        },
+        "previous": "c78a7316323a8548ebfeb8befe8f1a84b9a79b8228340aa3e85789ce1981efe9",
+        "hash": "0015e2e263670c5bb8f31612ee360d9aa9efde49e8471a7260c2d2fbb52842fe"
+      },
+      {
+        "payload": {
+          "action": "ingest-event",
+          "at": "2026-11-01T12:00:00Z",
+          "request_sha256": "4293053af6023ec1ed83811ccf7a4032ac5f99fa9fa16b2f574662b6cd6cbcb8",
+          "result_sha256": "205159c5c57b8f85758b7f81e93806d9f6b3260ceadad031a589221216c3590f",
+          "subject": "alex",
+          "tenant": "alder"
+        },
+        "previous": "0015e2e263670c5bb8f31612ee360d9aa9efde49e8471a7260c2d2fbb52842fe",
+        "hash": "03533efc018c5d09052ebde87935bc764f2bb87b6a927730a402c2f7d51d3237"
+      },
+      {
+        "payload": {
+          "action": "ingest-event",
+          "at": "2026-11-01T12:00:00Z",
+          "request_sha256": "5388db5677cfc01a17e9465117ab76c142700929a5ea5ca62417b8d698cd5778",
+          "result_sha256": "205159c5c57b8f85758b7f81e93806d9f6b3260ceadad031a589221216c3590f",
+          "subject": "alex",
+          "tenant": "alder"
+        },
+        "previous": "03533efc018c5d09052ebde87935bc764f2bb87b6a927730a402c2f7d51d3237",
+        "hash": "68d10b665b73b86f1f9e2a3df875007f5ca2774b1ade50f312aa546c3f46e88d"
+      },
+      {
+        "payload": {
+          "action": "import-integration",
+          "at": "2026-11-01T12:00:00Z",
+          "request_sha256": "3f6b8b69d61d5a5f437f8937e04c629d9911e9cd240972e7366876500d51db29",
+          "result_sha256": "54aed785b0cd9bc9b52aa8643868f790a0a9db5e8e63d025106261a2d7b69621",
+          "subject": "alex",
+          "tenant": "alder"
+        },
+        "previous": "68d10b665b73b86f1f9e2a3df875007f5ca2774b1ade50f312aa546c3f46e88d",
+        "hash": "54f7e6dd2d893107c9f11fb3c3930b3e70deaebb124ee15ae494b6ee59637866"
+      },
+      {
+        "payload": {
+          "action": "read-summary",
+          "at": "2026-11-01T12:00:00Z",
+          "request_sha256": "d7b149571eead77610e840d582a19bb9543143d5009358463fb0f3423f4d4067",
+          "result_sha256": "3b8f88f0aa77f29e5dfc3cee6e4af917ce2f99fd1951c7d3a435d52b2f7c0433",
+          "subject": "blair",
+          "tenant": "alder"
+        },
+        "previous": "54f7e6dd2d893107c9f11fb3c3930b3e70deaebb124ee15ae494b6ee59637866",
+        "hash": "ba219fe5d610f24128e09bb6e4b1ceb76cec7de81c3e5a2399fa84f502c4e334"
+      }
+    ]
+  },
+  "network_demo": {
+    "transport": "actual-loopback-http",
+    "result": {
+      "synthetic": true,
+      "record_count": 3
+    }
+  },
+  "event_delivery": {
+    "transport": "actual-loopback-http",
+    "signature_rejection_verified": true,
+    "idempotent_delivery_verified": true,
+    "durable_readback": {
+      "count": 1,
+      "events_sha256": "95be398c485a21a3959b58060ec626b4b21198dfe7a486db93455aaffefe56bb",
+      "id": "95be398c485a21a3959b58060ec626b4b21198dfe7a486db93455aaffefe56bb"
+    },
+    "scope": "local_security_event_receiver_not_a_commercial_siem_connector"
+  }
+}

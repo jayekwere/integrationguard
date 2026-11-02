@@ -1,0 +1,8 @@
+{
+  "synthetic": true,
+  "scopes": [
+    "full"
+  ],
+  "modify_all_data": true,
+  "mfa_required": null
+}

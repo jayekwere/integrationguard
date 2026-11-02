@@ -1,0 +1,198 @@
+{
+  "import-integration": {
+    "additionalProperties": false,
+    "properties": {
+      "id": {
+        "pattern": "^[a-z][a-z0-9-]{0,63}$",
+        "title": "Id",
+        "type": "string"
+      },
+      "provider": {
+        "enum": [
+          "salesforce-export",
+          "synthetic-gateway"
+        ],
+        "title": "Provider",
+        "type": "string"
+      },
+      "owner": {
+        "pattern": "^[a-z][a-z0-9-]{0,63}$",
+        "title": "Owner",
+        "type": "string"
+      },
+      "scopes": {
+        "items": {
+          "type": "string"
+        },
+        "maxItems": 20,
+        "title": "Scopes",
+        "type": "array"
+      },
+      "modify_all_data": {
+        "anyOf": [
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "title": "Modify All Data"
+      },
+      "mfa_required": {
+        "anyOf": [
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "title": "Mfa Required"
+      },
+      "observed_at": {
+        "maxLength": 40,
+        "minLength": 20,
+        "title": "Observed At",
+        "type": "string"
+      },
+      "source_sha256": {
+        "pattern": "^[a-f0-9]{64}$",
+        "title": "Source Sha256",
+        "type": "string"
+      },
+      "source_ref": {
+        "maxLength": 200,
+        "minLength": 1,
+        "title": "Source Ref",
+        "type": "string"
+      }
+    },
+    "required": [
+      "id",
+      "provider",
+      "owner",
+      "scopes",
+      "modify_all_data",
+      "mfa_required",
+      "observed_at",
+      "source_sha256",
+      "source_ref"
+    ],
+    "title": "Integration",
+    "type": "object"
+  },
+  "record-correction": {
+    "additionalProperties": false,
+    "properties": {
+      "id": {
+        "pattern": "^[a-z][a-z0-9-]{0,63}$",
+        "title": "Id",
+        "type": "string"
+      },
+      "version": {
+        "maximum": 1000000,
+        "minimum": 1,
+        "title": "Version",
+        "type": "integer"
+      },
+      "scopes": {
+        "items": {
+          "type": "string"
+        },
+        "maxItems": 20,
+        "title": "Scopes",
+        "type": "array"
+      },
+      "modify_all_data": {
+        "anyOf": [
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "title": "Modify All Data"
+      },
+      "mfa_required": {
+        "anyOf": [
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "title": "Mfa Required"
+      },
+      "observed_at": {
+        "maxLength": 40,
+        "minLength": 20,
+        "title": "Observed At",
+        "type": "string"
+      },
+      "source_sha256": {
+        "pattern": "^[a-f0-9]{64}$",
+        "title": "Source Sha256",
+        "type": "string"
+      }
+    },
+    "required": [
+      "id",
+      "version",
+      "scopes",
+      "modify_all_data",
+      "mfa_required",
+      "observed_at",
+      "source_sha256"
+    ],
+    "title": "Correct",
+    "type": "object"
+  },
+  "ingest-event": {
+    "additionalProperties": false,
+    "properties": {
+      "id": {
+        "pattern": "^[a-z][a-z0-9-]{0,63}$",
+        "title": "Id",
+        "type": "string"
+      },
+      "integration_id": {
+        "pattern": "^[a-z][a-z0-9-]{0,63}$",
+        "title": "Integration Id",
+        "type": "string"
+      },
+      "event": {
+        "enum": [
+          "login-failure",
+          "bulk-export",
+          "configuration-change"
+        ],
+        "title": "Event",
+        "type": "string"
+      },
+      "occurred_at": {
+        "maxLength": 40,
+        "minLength": 20,
+        "title": "Occurred At",
+        "type": "string"
+      },
+      "native_id": {
+        "maxLength": 80,
+        "minLength": 1,
+        "title": "Native Id",
+        "type": "string"
+      }
+    },
+    "required": [
+      "id",
+      "integration_id",
+      "event",
+      "occurred_at",
+      "native_id"
+    ],
+    "title": "Event",
+    "type": "object"
+  }
+}

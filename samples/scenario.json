@@ -1,0 +1,122 @@
+{
+  "intro": "Identify broad integration permissions, import correction evidence and normalize a synthetic security event.",
+  "steps": [
+    {
+      "id": "imported",
+      "title": "Import risky synthetic integration settings",
+      "action": "import-integration",
+      "data": {
+        "id": "crm",
+        "provider": "salesforce-export",
+        "owner": "business-systems",
+        "scopes": [
+          "full"
+        ],
+        "modify_all_data": true,
+        "mfa_required": null,
+        "observed_at": "$now",
+        "source_sha256": "52ce12e48a2b7f4eab49b7f6b016dea1ea83846021afde9e80bd743ed3ad2df9",
+        "source_ref": "samples/salesforce-risky.json"
+      },
+      "identity": "demo-operator"
+    },
+    {
+      "id": "corrected",
+      "title": "Import a narrow permission configuration",
+      "action": "record-correction",
+      "data": {
+        "id": "crm",
+        "version": 1,
+        "scopes": [
+          "api:read"
+        ],
+        "modify_all_data": false,
+        "mfa_required": true,
+        "observed_at": "$now",
+        "source_sha256": "510dfd45f268b8ca39e7bd29796b78a19f19877cc1615b89fd2fa71b84d09f90"
+      },
+      "identity": "demo-operator"
+    },
+    {
+      "id": "stale",
+      "title": "Reject replacement based on an old version",
+      "action": "record-correction",
+      "data": {
+        "id": "crm",
+        "version": 1,
+        "scopes": [
+          "full"
+        ],
+        "modify_all_data": true,
+        "mfa_required": false,
+        "observed_at": "$now",
+        "source_sha256": "52ce12e48a2b7f4eab49b7f6b016dea1ea83846021afde9e80bd743ed3ad2df9"
+      },
+      "identity": "demo-operator",
+      "expect_error": 409
+    },
+    {
+      "id": "event",
+      "title": "Normalize an observed bulk export event",
+      "action": "ingest-event",
+      "data": {
+        "id": "event-one",
+        "integration_id": "crm",
+        "event": "bulk-export",
+        "occurred_at": "$now",
+        "native_id": "synthetic-event-001"
+      },
+      "identity": "demo-operator"
+    },
+    {
+      "id": "duplicate",
+      "title": "Deduplicate the native event identifier",
+      "action": "ingest-event",
+      "data": {
+        "id": "event-two",
+        "integration_id": "crm",
+        "event": "bulk-export",
+        "occurred_at": "$event.occurred_at",
+        "native_id": "synthetic-event-001"
+      },
+      "identity": "demo-operator"
+    },
+    {
+      "id": "gateway",
+      "title": "Register the local read-only API integration",
+      "action": "import-integration",
+      "data": {
+        "id": "gateway",
+        "provider": "synthetic-gateway",
+        "owner": "platform",
+        "scopes": [
+          "synthetic:read"
+        ],
+        "modify_all_data": false,
+        "mfa_required": true,
+        "observed_at": "$now",
+        "source_sha256": "b523782773d8501b80c534f871337a44c7d4ec9b45238403c59564fa74687297",
+        "source_ref": "samples/gateway.json"
+      },
+      "identity": "demo-operator"
+    },
+    {
+      "id": "boundary",
+      "title": "Reject a tenant-crossing correction",
+      "action": "record-correction",
+      "data": {
+        "id": "crm",
+        "version": 2,
+        "scopes": [
+          "api:read"
+        ],
+        "modify_all_data": false,
+        "mfa_required": true,
+        "observed_at": "$now",
+        "source_sha256": "52ce12e48a2b7f4eab49b7f6b016dea1ea83846021afde9e80bd743ed3ad2df9"
+      },
+      "identity": "demo-other",
+      "expect_error": 404
+    }
+  ]
+}

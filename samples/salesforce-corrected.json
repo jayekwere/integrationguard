@@ -1,0 +1,8 @@
+{
+  "synthetic": true,
+  "scopes": [
+    "api:read"
+  ],
+  "modify_all_data": false,
+  "mfa_required": true
+}
